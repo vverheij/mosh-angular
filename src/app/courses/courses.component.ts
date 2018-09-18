@@ -12,6 +12,8 @@ import { Component, OnInit } from '@angular/core';
   selector: 'courses',
   template: `
   <h1 [textContent]="title"></h1>
+  <button class="btn btn-primary">ok</button>
+  <span class="glyphicon glyphicon-star">span</span>
   <div (click) ="onDivClicked()">
     <button [style.backgroundColor] = "isActive ? 'blue' : 'white'" (click)="onSave($event)" >Save</button>
     <input [(ngModel)]="email" (keyup.enter)="onKeyUp()"/><br/>
@@ -48,6 +50,7 @@ export class CoursesComponent {
     console.log(this.email);
     //console.log("E");
   }
+
   course = {
     title: "The complete angular course",
     rating: 4.9745,

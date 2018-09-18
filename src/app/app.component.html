@@ -1,3 +1,20 @@
 
-<h1>Angular</h1>
+<h1>Hello World</h1>
 <courses></courses>
+<favorite [isFavorite]="post.isFavorite" (change)="onFavoriteChanged($event)"></favorite>
+<br>
+<input type = "text" [(ngModel)]="title"><br>
+{{title | titleCase}}
+<bootstrap-panel>
+    <ng-container class="heading">Heading</ng-container>
+    <div class="body">
+        <h2>Body</h2>
+        <p>content</p>
+    </div>
+</bootstrap-panel>
+<like
+    [likesCount]="tweet.likesCount"
+    [isActive]="tweet.isLiked"
+    (bla)="onLikeClicked($event)">
+</like>
+<!-- {{tweet.likesCount}} -->

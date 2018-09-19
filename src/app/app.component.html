@@ -17,6 +17,8 @@
     [isActive]="tweet.isLiked"
     (bla)="onLikeClicked($event)">
 </like>
+
+<!-- hiding stuf -->
 <br/>
 <div *ngIf="courses.length > 0; then coursesList else noCourses">
 </div>
@@ -35,6 +37,7 @@
     no courses yet 2
 </div>
 
+<!-- tabs -->
 <ul class="nav nav-pills">
     <li [class.active]="viewMode == 'map'"><a (click)="viewMode = 'map'">Map View</a></li>
     <li [class.active]="viewMode == 'list'"><a (click)="viewMode= 'list'">List View</a></li>
@@ -68,6 +71,17 @@ Save
 </button>
 <br/>
 <input type="text" [appInputFormat]="'lowercase'">
+
+<br/>
+
+<zippy title="Shipping Details">
+    Shipping details content
+</zippy>
+<zippy title="Billing Details">
+    Billing details content
+</zippy>
+
+
 <!-- 
 [style.backgroundColor]="canSave ? 'blue': 'gray'"
 [style.color]="canSave ? 'white': 'black'" 

@@ -1,7 +1,8 @@
+import { SignupFormComponent } from './signup-form/signup-form.component';
 import { SummaryPipe } from './summary.pipe';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -18,10 +19,14 @@ import { InputFormatDirective } from './input-format.directive';
 import { ZippyComponent } from './zippy/zippy.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { NewCourseFormComponent } from './new-course-form/new-course-form.component';
+import { NewCourseForm2Component } from './new-course-form2/new-course-form2.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
+    SignupFormComponent,  
     CoursesComponent,
     CourseComponent,
     AuthorsComponent,
@@ -33,11 +38,14 @@ import { NewCourseFormComponent } from './new-course-form/new-course-form.compon
     InputFormatDirective,
     ZippyComponent,
     ContactFormComponent,
-    NewCourseFormComponent
+    NewCourseFormComponent,
+    NewCourseForm2Component,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule, 
+    ReactiveFormsModule 
   ],
   providers: [
     CoursesService,

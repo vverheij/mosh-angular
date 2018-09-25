@@ -1,6 +1,6 @@
 import { PostService } from './../services/post.service';
 import { Component, OnInit } from '@angular/core';
-
+//import { Http } from '@angular/http';
 
 
 @Component({
@@ -9,11 +9,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
-  
+  private url = 'https://jsonplaceholder.typicode.com/posts'; 
   posts: any[];
 
   constructor(private service: PostService ) { 
   }
+
+  // constructor(private http: Http ) { 
+  // }
+
+  // constructor(http: Http ) { 
+  //   http.get(this.url) 
+  //     .subscribe(response => {
+  //       this.posts = response.json();
+  //   });
+  // }
+
+
+
 
   createPost(input: HTMLInputElement) {
     let post = { title: input.value }
@@ -25,16 +38,18 @@ export class PostsComponent implements OnInit {
           post['id'] = response.json().id;
           this.posts.splice(0, 0, post);
           console.log(response.json());
-        }, 
+        } , 
         (error: Response) => {
           if (error.status === 400){
             //this.form.setError(error.json());
-          }  else {
+          } else {
             alert('An unexpected error occurred.');
             console.log(error);
           }
         });
   }
+
+
 
   updatePost(post) {
     this.service.updatePost(post)
@@ -42,25 +57,29 @@ export class PostsComponent implements OnInit {
         response => {
           console.log(response.json())
       }, 
-      (error) => {
+      (error: Response) => {
         alert('An unexpected error occurred.');
         console.log(error)
       });
-    //this.http.put(this.url, JSON.stringify(post));
   }
 
+
   deletePost(post) {
-    this.service.deletePost(234)
+    this.service.deletePost(post.id)
       .subscribe(
         response => {
           let index = this.posts.indexOf(post);
           this.posts.splice(index, 1);
         }, 
         (error: Response) => {
-          if (error.status == 404)
-            alert('this post has already been deleted.')
-          alert('An unexpected error occurred.');
-          console.log(error)
+
+          if (error.status == 404){
+             alert('This post has already been deleted.');
+          } else {      
+            alert('An unexpected error occurred.');
+            console.log(error);
+          }
+    
         });
   }
 
@@ -68,6 +87,9 @@ export class PostsComponent implements OnInit {
     this.service.getPosts()
       .subscribe(response => {
       this.posts = response.json();
+    }, error => {
+      alert('An unexpected error occurred.');
+      console.log(error);
     });
   }
 }

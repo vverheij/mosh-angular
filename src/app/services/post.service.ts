@@ -48,7 +48,7 @@ export class PostService {
               console.log('Created NotFoundError');
               console.log(nfError);
             }
-          throw of(new NotFoundError(error));
+          throw of(new NotFoundError(error)); // return gewijzigd naar throw
         }
         console.log('in service: Returning AppError');
         return of(new AppError(error));

@@ -8,7 +8,7 @@ import { FormGroup, FormArray, FormControl } from '@angular/forms';
 })
 export class NewCourseForm2Component{
   form = new FormGroup( {
-    topics: new FormArray([]);
+    topics: new FormArray([])
   });
   addTopic(topic:HTMLInputElement) {
     this.topics.push(new FormControl(topic.value));

@@ -1,5 +1,6 @@
 import { BadInput } from './../common/bad-input';
 import { AppError } from './../common/app-error';
+import { NotFoundError } from '../common/not-found-error';
 //import { NotFoundError } from './../common/not-found-error';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
@@ -7,8 +8,10 @@ import { Http } from '@angular/http';
 // import 'rxjs/add/operator/catch';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+
 //import { AppError } from '../common/app-error';
-import { NotFoundError } from '../common/not-found-error';
+
 import {throwError} from 'rxjs';
 
 @Injectable({
@@ -18,11 +21,23 @@ export class DataService {
    constructor(private url: string, private http: Http) { }
 
   getAll() {
-    return this.http.get(this.url);
+    return this.http.get(this.url)
+      .pipe(map(response => {
+         return response.json();
+      }));
   }
 
   create(resource) {
+    // return an error for test purposes
+    // return this.http.post(this.url, JSON.stringify(resource))
+    //     .pipe((error) => {
+    //         return throwError(new AppError(error));
+    //     });  
     return this.http.post(this.url, JSON.stringify(resource))
+      .pipe(map(response => {
+        return response.json()
+      }
+      ))
       .pipe(catchError((error: any) => {
         if (error.status === 400){
           return throwError(new BadInput(error));
@@ -32,7 +47,11 @@ export class DataService {
   }
 
   update(resource) {
-    return this.http.patch(this.url + '/' + resource.id, JSON.stringify({isRead: true}));
+    return this.http.patch(this.url + '/' + resource.id, JSON.stringify({isRead: true}))
+    .pipe(map(response => {
+        return response.json();
+      })
+    );
   }
   
   delete(id){

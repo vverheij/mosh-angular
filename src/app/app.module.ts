@@ -1,3 +1,4 @@
+import { GithubFollowersService } from './services/github-followers.service';
 import { PostService } from './services/post.service';
 import { SignupFormComponent } from './signup-form/signup-form.component';
 import { SummaryPipe } from './summary.pipe';
@@ -26,6 +27,7 @@ import { NewCourseForm2Component } from './new-course-form2/new-course-form2.com
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { PostsComponent } from './posts/posts.component';
 import { AppErrorHandler } from './common/app-error-handler';
+import { GithubFollowersComponent } from './github-followers/github-followers.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import { AppErrorHandler } from './common/app-error-handler';
     NewCourseForm2Component,
     ChangePasswordComponent,
     PostsComponent,
+    GithubFollowersComponent,
 
   ],
   imports: [
@@ -58,6 +61,7 @@ import { AppErrorHandler } from './common/app-error-handler';
     PostService,
     CoursesService,
     AuthorsService,
+    GithubFollowersService,
     { provide: ErrorHandler, useClass: AppErrorHandler }
   ],
   bootstrap: [AppComponent]

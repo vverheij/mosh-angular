@@ -2,7 +2,7 @@ import { NotFoundError } from './../common/not-found-error';
 import { AppError } from './../common/app-error';
 import { PostService } from './../services/post.service';
 import { Component, OnInit } from '@angular/core';
-
+import { BadInput} from './../common/bad-input';
 //import { Http } from '@angular/http';
 
 
@@ -42,9 +42,10 @@ export class PostsComponent implements OnInit {
           this.posts.splice(0, 0, post);
           console.log(response.json());
         } , 
-        (error: Response) => {
-          if (error.status === 400){
+        (error: AppError) => {
+          if (error instanceof BadInput){
             //this.form.setError(error.json());
+            alert('Bad input occurred.');
           } else {
             alert('An unexpected error occurred.');
             console.log(error);
@@ -60,9 +61,15 @@ export class PostsComponent implements OnInit {
         response => {
           console.log(response.json())
       }, 
-      (error: Response) => {
-        alert('An unexpected error occurred.');
-        console.log(error)
+      (error: AppError) => {
+        if (error instanceof NotFoundError) {
+          alert('This post was not found');
+          console.log(error)
+        } else {
+          alert('An unexpected error occurred.')
+          console.log(error)
+        }
+
       });
   }
 

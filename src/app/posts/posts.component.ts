@@ -18,19 +18,6 @@ export class PostsComponent implements OnInit {
   constructor(private service: PostService ) { 
   }
 
-  // constructor(private http: Http ) { 
-  // }
-
-  // constructor(http: Http ) { 
-  //   http.get(this.url) 
-  //     .subscribe(response => {
-  //       this.posts = response.json();
-  //   });
-  // }
-
-
-
-
   createPost(input: HTMLInputElement) {
     let post = { title: input.value }
     input.value = '';
@@ -43,6 +30,7 @@ export class PostsComponent implements OnInit {
           console.log(response.json());
         } , 
         (error: AppError) => {
+          alert('Error updating');
           if (error instanceof BadInput){
             //this.form.setError(error.json());
             alert('Bad input occurred.');
@@ -50,7 +38,8 @@ export class PostsComponent implements OnInit {
             alert('An unexpected error occurred.');
             console.log(error);
           }
-        });
+        }
+      );
   }
 
 
@@ -62,44 +51,47 @@ export class PostsComponent implements OnInit {
           console.log(response.json())
       }, 
       (error: AppError) => {
+        alert('Error updating');
         if (error instanceof NotFoundError) {
           alert('This post was not found');
           console.log(error)
         } else {
-          alert('An unexpected error occurred.')
+          alert('An unexpected error occurred!')
           console.log(error)
         }
-
       });
   }
 
-
   deletePost(post) {
-    this.service.deletePost(post.id)
+    this.service.deletePost(345)
       .subscribe(
         response => {
           let index = this.posts.indexOf(post);
           this.posts.splice(index, 1);
         }, 
         (error: AppError) => {
-
+          alert('Error deleting');
           if (error instanceof NotFoundError){
              alert('This post has already been deleted.');
+             console.log(error);
           } else {      
             alert('An unexpected error occurred.');
             console.log(error);
           }
-    
-        });
+        }
+      );
   }
 
   ngOnInit() {
     this.service.getPosts()
-      .subscribe(response => {
-      this.posts = response.json();
-    }, error => {
-      alert('An unexpected error occurred.');
-      console.log(error);
-    });
-  }
+      .subscribe(
+        response => {
+          this.posts = response.json();
+        },
+        error => {
+          alert('An unexpected error occurred.');
+          console.log(error);
+        }
+      );
+    }
 }

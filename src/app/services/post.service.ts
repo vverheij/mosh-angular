@@ -37,13 +37,16 @@ export class PostService {
   }
   
   deletePost(id){
+    console.log('Deleting post ' + id + '!');
     return this.http.delete(this.url + '/' + id)
       .pipe(catchError((error: any) => {
         //return of(error); 
+        console.log('Error status ' + error.status + ' occurred');
         if (error.status === 404){
+          console.log('Returning NotFoundError');
           return of(new NotFoundError(error));
         }
-
+        console.log('Returning AppError in deletePost method of PostService');
         return of(new AppError(error));
     }));
   }

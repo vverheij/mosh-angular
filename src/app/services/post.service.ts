@@ -40,13 +40,17 @@ export class PostService {
     console.log('Deleting post ' + id + '!');
     return this.http.delete(this.url + '/' + id)
       .pipe(catchError((error: any) => {
-        //return of(error); 
-        console.log('Error status ' + error.status + ' occurred');
+        console.log('in service: Error status ' + error.status + ' occurred');
         if (error.status === 404){
-          console.log('Returning NotFoundError');
+          console.log('in service: Returning NotFoundError');
+          let nfError = new NotFoundError(error);
+            if (nfError instanceof NotFoundError){
+              console.log('Created NotFoundError');
+              console.log(nfError);
+            }
           throw of(new NotFoundError(error));
         }
-        console.log('Returning AppError in deletePost method of PostService');
+        console.log('in service: Returning AppError');
         return of(new AppError(error));
     }));
   }

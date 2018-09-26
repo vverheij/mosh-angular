@@ -70,12 +70,12 @@ export class PostsComponent implements OnInit {
           this.posts.splice(index, 1);
         }, 
         (error: AppError) => {
-          alert('Error deleting');
+          alert('in component: Error deleting');
           if (error instanceof NotFoundError){
-             alert('This post has already been deleted.');
+             alert('in component: This post has already been deleted.');
              console.log(error);
           } else {      
-            alert('An unexpected error occurred.');
+            alert('in component: An unexpected error occurred.');
             console.log(error);
           }
         }

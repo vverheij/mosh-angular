@@ -1,34 +1,28 @@
-import { DataService } from './data.service';
-//import { BadInput } from './../common/bad-input';
-//import { AppError } from './../common/app-error';
+import { BadInput } from './../common/bad-input';
+import { AppError } from './../common/app-error';
 //import { NotFoundError } from './../common/not-found-error';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 //import { Observable } from 'rxjs/Observable';
 // import 'rxjs/add/operator/catch';
-//import { of } from 'rxjs';
-//import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 //import { AppError } from '../common/app-error';
-//import { NotFoundError } from '../common/not-found-error';
-//import {throwError} from 'rxjs';
-
+import { NotFoundError } from '../common/not-found-error';
+import {throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PostService extends DataService {
-  constructor(http: Http) { 
-    super('https://jsonplaceholder.typicode.com/posts', http);
-  }
+export class DataService {
+   constructor(private url: string, private http: Http) { }
 
-// al the code below has been moved to superclass DataService;
-/*
-  getPosts() {
+  getAll() {
     return this.http.get(this.url);
   }
 
-  createPost(post) {
-    return this.http.post(this.url, JSON.stringify(post))
+  create(resource) {
+    return this.http.post(this.url, JSON.stringify(resource))
       .pipe(catchError((error: any) => {
         if (error.status === 400){
           return throwError(new BadInput(error));
@@ -37,11 +31,11 @@ export class PostService extends DataService {
       }));
   }
 
-  updatePost(post) {
-    return this.http.patch(this.url + '/' + post.id, JSON.stringify({isRead: true}));
+  update(resource) {
+    return this.http.patch(this.url + '/' + resource.id, JSON.stringify({isRead: true}));
   }
   
-  deletePost(id){
+  delete(id){
     return this.http.delete(this.url + '/' + id)      
       .pipe(catchError((error: any) => {
         if (error.status === 404){
@@ -59,5 +53,4 @@ export class PostService extends DataService {
     }
     return throwError(new AppError(error));
   }
-  */
 }

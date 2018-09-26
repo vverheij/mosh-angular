@@ -44,12 +44,10 @@ export class PostService {
         console.log('Error status ' + error.status + ' occurred');
         if (error.status === 404){
           console.log('Returning NotFoundError');
-          return of(new NotFoundError(error));
+          throw of(new NotFoundError(error));
         }
         console.log('Returning AppError in deletePost method of PostService');
         return of(new AppError(error));
     }));
   }
 }
-
-//okay, dat gaat lukken, mocht ik het toch niet lukken dan laat ik het wel even weten..... ;-)  

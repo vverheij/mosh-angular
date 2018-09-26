@@ -24,7 +24,7 @@ import { NewCourseFormComponent } from './new-course-form/new-course-form.compon
 import { NewCourseForm2Component } from './new-course-form2/new-course-form2.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { PostsComponent } from './posts/posts.component';
-
+//import { AppErrorHandler } from './common/app-error-handler';
 
 @NgModule({
   declarations: [
@@ -57,6 +57,7 @@ import { PostsComponent } from './posts/posts.component';
     PostService,
     CoursesService,
     AuthorsService
+    //{ provide: ErrorHandler, useClass: AppErrorHandler }
   ],
   bootstrap: [AppComponent]
 })

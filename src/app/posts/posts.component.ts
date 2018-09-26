@@ -34,6 +34,7 @@ export class PostsComponent implements OnInit {
           if (error instanceof BadInput){
             //this.form.setError(error.json());
             alert('Bad input occurred.');
+            console.log(error);            
           } else {
             alert('An unexpected error occurred.');
             console.log(error);
@@ -54,29 +55,29 @@ export class PostsComponent implements OnInit {
         alert('Error updating');
         if (error instanceof NotFoundError) {
           alert('This post was not found');
-          console.log(error)
+          //console.log(error)
         } else {
           alert('An unexpected error occurred!')
-          console.log(error)
+          //console.log(error)
         }
       });
   }
 
   deletePost(post) {
-    this.service.deletePost(345)
+    this.service.deletePost(post.id)
       .subscribe(
         response => {
           let index = this.posts.indexOf(post);
           this.posts.splice(index, 1);
         }, 
         (error: AppError) => {
-          alert('in component: Error deleting');
           if (error instanceof NotFoundError){
              alert('in component: This post has already been deleted.');
-             console.log(error);
+             //console.log(error);
           } else {      
             alert('in component: An unexpected error occurred.');
-            console.log(error);
+            //console.log(error);
+            //throw error;
           }
         }
       );

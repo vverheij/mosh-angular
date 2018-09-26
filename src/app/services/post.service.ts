@@ -9,6 +9,7 @@ import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 //import { AppError } from '../common/app-error';
 import { NotFoundError } from '../common/not-found-error';
+import {throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +27,9 @@ export class PostService {
     return this.http.post(this.url, JSON.stringify(post))
       .pipe(catchError((error: any) => {
         if (error.status === 400){
-          return of(new BadInput(error));
+          return throwError(new BadInput(error));
         }
-        return of(new AppError(error));
+        return throwError(new AppError(error));
       }));
   }
 
@@ -40,18 +41,12 @@ export class PostService {
     console.log('Deleting post ' + id + '!');
     return this.http.delete(this.url + '/' + id)
       .pipe(catchError((error: any) => {
-        console.log('in service: Error status ' + error.status + ' occurred');
+        //console.log('in service: Error status ' + error.status + ' occurred');
         if (error.status === 404){
-          console.log('in service: Returning NotFoundError');
-          let nfError = new NotFoundError(error);
-            if (nfError instanceof NotFoundError){
-              console.log('Created NotFoundError');
-              console.log(nfError);
-            }
-          throw of(new NotFoundError(error)); // return gewijzigd naar throw
+          return throwError(new NotFoundError(error));
         }
-        console.log('in service: Returning AppError');
-        return of(new AppError(error));
+        //console.log('in service: Returning AppError');
+        return throwError(new AppError(error));
     }));
   }
 }

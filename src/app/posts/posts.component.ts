@@ -16,7 +16,7 @@ export class PostsComponent implements OnInit {
   }
 
   createPost(input: HTMLInputElement) {
-    let post = { title: input.value }
+    let post = { id: null, title: input.value }
     this.posts.splice(0, 0, post);
 
     input.value = '';
@@ -28,8 +28,8 @@ export class PostsComponent implements OnInit {
         //   this.posts.splice(0, 0, post);
         //   console.log(response.json());
         // }, 
-        newPost => {
-          post['id'] = newPost.id;
+        (newPost: any) => {
+          post.id = newPost.id;
           //this.posts.splice(0, 0, post);
           console.log('Post ' + post.title + ' created'); 
         }, 
@@ -62,6 +62,7 @@ export class PostsComponent implements OnInit {
     // optimistic delete
     let index = this.posts.indexOf(post);
     this.posts.splice(index, 1);
+
     this.service.delete(post.id)
       .subscribe(
         // v 1
@@ -74,11 +75,15 @@ export class PostsComponent implements OnInit {
         //   let index = this.posts.indexOf(post);
         //   this.posts.splice(index, 1);
         // }
+
         // v3 // optimistic delete
         null
         , 
         (error: AppError) => {
+          // undo optimistic delete
+          console.log('Error occured, undoing delete')
           this.posts.splice(index, 0, post);
+          
           if (error instanceof NotFoundError){
              alert('This post has already been deleted.');
           } else {      
